@@ -1,0 +1,35 @@
+{
+  "name": "tradier-client",
+  "version": "0.0.1",
+  "description": "Node Tradier Brokerage API Client",
+  "main": "index.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc-watch -p tsconfig.json --onSuccess \"node dist/dev.js\"",
+    "build": "rm -rf dist && tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReycoDev/tradier-client.git"
+  },
+  "keywords": [
+    "tradier",
+    "tradier-api"
+  ],
+  "author": "Corey O'Donnell <me@coreyodonnell.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ReycoDev/tradier-client/issues"
+  },
+  "homepage": "https://github.com/ReycoDev/tradier-client#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "tsc-watch": "^2.4.0",
+    "typescript": "^3.5.3"
+  }
+}
