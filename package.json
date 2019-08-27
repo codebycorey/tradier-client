@@ -2,7 +2,8 @@
   "name": "tradier-client",
   "version": "0.0.1",
   "description": "Node Tradier Brokerage API Client",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib"
   },

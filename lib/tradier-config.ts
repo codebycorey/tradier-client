@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { TradierAccountType } from './models';
+import { TradierAccountType } from './tradier.models';
 
 interface Headers {
     Authorization: string;

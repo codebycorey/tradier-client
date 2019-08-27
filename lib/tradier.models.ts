@@ -1,10 +1,10 @@
-export interface TradierAuthentication {
+interface TradierAuthentication {
     get_auth_code: string;
     create_access_token: string;
     refresh_access_token: string;
 }
 
-export interface TradierAccount {
+interface TradierAccount {
     balance: string;
     positions: string;
     history: string;
@@ -13,9 +13,7 @@ export interface TradierAccount {
     individual_order: string;
 }
 
-
-
-export interface TradierFundamentals {
+interface TradierFundamentals {
     company: string;
     corporate_calendars: string;
     dividends: string;
@@ -25,24 +23,21 @@ export interface TradierFundamentals {
     price_statistics: string;
 }
 
-export interface TradierStreaming {
+interface TradierStreaming {
     create_session: string;
     quotes: string;
 }
 
-export interface TradierEndpoints {
+interface TradierEndpoints {
     authentication: TradierAuthentication;
     account: TradierAccount;
     fundamentals: TradierFundamentals;
     streaming: TradierStreaming;
 }
 
-export enum TradierAccountType {
-    SANDBOX = 'sandbox',
-    API = 'api',
-}
 
-export enum TradierEndpointTypes {
+
+enum TradierEndpointTypes {
     AUTHENTICATION = 'authentication',
     ACCOUNT = 'account',
     MARKET = 'market',
@@ -50,7 +45,7 @@ export enum TradierEndpointTypes {
     STREAMING = 'streaming',
 }
 
-export const endpoints: TradierEndpoints = {
+const endpoints: TradierEndpoints = {
     [TradierEndpointTypes.AUTHENTICATION]: {
         get_auth_code: '/v1/oauth/authorize?client_id={clientId}&scope={scopes}&state={state}',
         create_access_token: '/v1/oauth/accesstoken',
@@ -77,4 +72,9 @@ export const endpoints: TradierEndpoints = {
         create_session: '/v1/markets/events/session',
         quotes: '/v1/markets/events',
     }
+}
+
+export enum TradierAccountType {
+  SANDBOX = 'sandbox',
+  API = 'api',
 }

@@ -1,8 +1,8 @@
-import { TradierAccountType } from './models';
+import { TradierAccountType } from './tradier.models';
 import { TradierMarketClient } from './market';
 import { TradierConfig } from './tradier-config';
 
-export class Tradier {
+export class TradierClient {
 
   private readonly tradierConfig: TradierConfig;
 
