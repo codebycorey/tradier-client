@@ -1,7 +1,7 @@
 {
   "name": "@reycodev/tradier-client",
-  "version": "0.1.0",
-  "description": "Node Tradier Brokerage API Client",
+  "version": "0.2.0",
+  "description": "Node.js Tradier Brokerage API written in typescript. ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
@@ -20,7 +20,11 @@
   },
   "keywords": [
     "tradier",
-    "tradier-api"
+    "tradier-api",
+    "stock-prices",
+    "market-data",
+    "finance",
+    "stocks"
   ],
   "author": "Corey O'Donnell <me@coreyodonnell.com>",
   "license": "MIT",
