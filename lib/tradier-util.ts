@@ -34,7 +34,7 @@ export class TradierUtil {
             return `${TradierBaseUrl.SANDBOX}${url}`;
         }
 
-        if (this.options.accountType === TradierAccountType.API) {
+        if (this.options.accountType === TradierAccountType.BROKERAGE) {
             return `${TradierBaseUrl.API}${url}`;
         }
 

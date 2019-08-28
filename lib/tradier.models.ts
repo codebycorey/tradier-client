@@ -13,16 +13,6 @@ interface TradierAccount {
     individual_order: string;
 }
 
-interface TradierFundamentals {
-    company: string;
-    corporate_calendars: string;
-    dividends: string;
-    corporate_actions: string;
-    ratios: string;
-    financial_reports: string;
-    price_statistics: string;
-}
-
 interface TradierStreaming {
     create_session: string;
     quotes: string;
@@ -31,11 +21,8 @@ interface TradierStreaming {
 interface TradierEndpoints {
     authentication: TradierAuthentication;
     account: TradierAccount;
-    fundamentals: TradierFundamentals;
     streaming: TradierStreaming;
 }
-
-
 
 enum TradierEndpointTypes {
     AUTHENTICATION = 'authentication',
@@ -59,15 +46,6 @@ const endpoints: TradierEndpoints = {
         orders: '/v1/accounts/{account_id}/orders',
         individual_order: '/v1/accounts/{account_id}/orders/{id}',
     },
-    [TradierEndpointTypes.FUNDAMENTALS]: {
-        company: '/beta/markets/fundamentals/company',
-        corporate_calendars: '/beta/markets/fundamentals/calendars',
-        dividends: '/beta/markets/fundamentals/dividends',
-        corporate_actions: '/beta/markets/fundamentals/corporate_actions',
-        ratios: '/beta/markets/fundamentals/ratios',
-        financial_reports: '/beta/markets/fundamentals/financials',
-        price_statistics: '/beta/markets/fundamentals/statistics',
-    },
     [TradierEndpointTypes.STREAMING]: {
         create_session: '/v1/markets/events/session',
         quotes: '/v1/markets/events',
@@ -76,7 +54,7 @@ const endpoints: TradierEndpoints = {
 
 export enum TradierAccountType {
   SANDBOX = 'sandbox',
-  API = 'api',
+  BROKERAGE = 'brokerage',
 }
 
 export interface TradierClientOptions {

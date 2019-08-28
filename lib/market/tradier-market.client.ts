@@ -41,7 +41,7 @@ export class TradierMarketClient {
   /**
    * Get a list of symbols using a keyword lookup on the symbols description. Results are in descending order
    * by average volume of the security. This can be used for simple search functions.
-   * @param symbols Comma-delimited list of symbols (equity or option)
+   * @param symbols Array of symbols (equity or option)
    */
   public async getQuotes(symbols: string[]) {
     const url: string = this.tradierUtil.buildUrl(endponts.quotes);
