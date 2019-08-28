@@ -1,6 +1,6 @@
 {
-  "name": "tradier-client",
-  "version": "0.0.1",
+  "name": "@reycodev/tradier-client",
+  "version": "0.1.0",
   "description": "Node Tradier Brokerage API Client",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc-watch -p tsconfig.json --onSuccess \"node dist/dev.js\"",
-    "build": "rm -rf dist && tsc -p tsconfig.json"
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse, AxiosStatic } from 'axios';
 
 import { TradierHistoryInterval, TradierSessionFilter, TradierTimeSalesInterval } from './tradier-market.models';
-import { TradierConfig } from '../tradier-config';
+import { TradierUtil } from '../tradier-util';
 
 interface TradierMarketEndpoints {
   quotes: string;
@@ -34,7 +34,8 @@ const endponts: TradierMarketEndpoints = {
 export class TradierMarketClient {
 
   public constructor(
-    private readonly tradierConfig: TradierConfig,
+    private readonly tradierUtil: TradierUtil,
+    private readonly axios: AxiosStatic = axios,
   ) {}
 
   /**
@@ -43,12 +44,12 @@ export class TradierMarketClient {
    * @param symbols Comma-delimited list of symbols (equity or option)
    */
   public async getQuotes(symbols: string[]) {
-    const url: string = this.tradierConfig.buildUrl(endponts.quotes);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.quotes);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbols: symbols.join(',')
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -58,13 +59,13 @@ export class TradierMarketClient {
    * @param expiration Expiration for the chain (format 2019-05-17)
    */
   public async getOptionChains(symbol: string, expiration: string) {
-    const url: string = this.tradierConfig.buildUrl(endponts.option_chains);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.option_chains);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbol,
       expiration
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -74,13 +75,13 @@ export class TradierMarketClient {
    * @param expiration Expiration for the chain (format 2019-05-17)
    */
   public async getOptionStrikes(symbol: string, expiration: string) {
-    const url: string = this.tradierConfig.buildUrl(endponts.option_strikes);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.option_strikes);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbol,
       expiration
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -95,14 +96,14 @@ export class TradierMarketClient {
    * @param strikes Add strike prices to each expiration
    */
   public async getOptionExpirations(symbol: string, includeAllRoots: boolean = false, strikes: boolean = false) {
-    const url: string = this.tradierConfig.buildUrl(endponts.option_expirations);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.option_expirations);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbol,
       includeAllRoots,
       strikes
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -115,15 +116,15 @@ export class TradierMarketClient {
    * @param end End date represented as YYYY-MM-DD
    */
   public async getHistoricalPricing(symbol: string, interval?: TradierHistoryInterval, start?: string, end?: string) {
-    const url: string = this.tradierConfig.buildUrl(endponts.historical_quotes);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.historical_quotes);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbol,
       interval,
       start,
       end
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -141,8 +142,8 @@ export class TradierMarketClient {
   public async getTimeAndSales(
     symbol: string, interval?: TradierTimeSalesInterval, start?: string, end?: string, session_filter?: TradierSessionFilter,
   ) {
-    const url: string = this.tradierConfig.buildUrl(endponts.time_and_sales);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.time_and_sales);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       symbol,
       interval,
       start,
@@ -150,7 +151,7 @@ export class TradierMarketClient {
       session_filter
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -159,10 +160,10 @@ export class TradierMarketClient {
    * The list is quite comprehensive and can result in a long download response time.
    */
   public async getETBSecurities() {
-    const url: string = this.tradierConfig.buildUrl(endponts.etb_securities);
-    const config: AxiosRequestConfig = this.tradierConfig.buildBaseConfig();
+    const url: string = this.tradierUtil.buildUrl(endponts.etb_securities);
+    const config: AxiosRequestConfig = this.tradierUtil.buildBaseConfig();
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -171,10 +172,10 @@ export class TradierMarketClient {
    * If programming logic on whether the market is open/closed – this API call should be used to determine the current state.
    */
   public async getClock() {
-    const url: string = this.tradierConfig.buildUrl(endponts.clock);
-    const config: AxiosRequestConfig = this.tradierConfig.buildBaseConfig();
+    const url: string = this.tradierUtil.buildUrl(endponts.clock);
+    const config: AxiosRequestConfig = this.tradierUtil.buildBaseConfig();
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -185,13 +186,13 @@ export class TradierMarketClient {
    * @param indexes Whether to include indexes in the results
    */
   public async searchForCompanies(q: string, indexes?: boolean) {
-    const url: string = this.tradierConfig.buildUrl(endponts.search_companies);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.search_companies);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       q,
       indexes,
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 
@@ -204,14 +205,14 @@ export class TradierMarketClient {
    * @param types Which security types to include in lookup
    */
   public async searchForSymbols(q: string, exchanges: string[] = [], types?: string) {
-    const url: string = this.tradierConfig.buildUrl(endponts.lookup_symbol);
-    const config: AxiosRequestConfig = this.tradierConfig.buildConfigWithParams({
+    const url: string = this.tradierUtil.buildUrl(endponts.lookup_symbol);
+    const config: AxiosRequestConfig = this.tradierUtil.buildConfigWithParams({
       q,
       exchanges: exchanges.join(','),
       types
     });
 
-    const response: AxiosResponse = await axios.get(url, config);
+    const response: AxiosResponse = await this.axios.get(url, config);
     return response.data;
   }
 

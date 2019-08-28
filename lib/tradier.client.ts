@@ -1,19 +1,20 @@
-import { TradierAccountType } from './tradier.models';
+import axios from 'axios';
+
+import { TradierClientOptions } from './tradier.models';
 import { TradierMarketClient } from './market';
-import { TradierConfig } from './tradier-config';
+import { TradierUtil } from './tradier-util';
 
 export class TradierClient {
 
-  private readonly tradierConfig: TradierConfig;
+  private readonly tradierUtil: TradierUtil;
 
   public readonly market: TradierMarketClient;
 
   public constructor(
-      private readonly accessToken: string,
-      private readonly accountType: TradierAccountType
+      private readonly options: TradierClientOptions,
   ) {
-    this.tradierConfig = new TradierConfig(this.accessToken, this.accountType);
+    this.tradierUtil = new TradierUtil(this.options);
 
-    this.market = new TradierMarketClient(this.tradierConfig);
+    this.market = new TradierMarketClient(this.tradierUtil, axios);
   }
 }

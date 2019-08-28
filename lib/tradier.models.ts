@@ -78,3 +78,8 @@ export enum TradierAccountType {
   SANDBOX = 'sandbox',
   API = 'api',
 }
+
+export interface TradierClientOptions {
+  accessToken: string;
+  accountType: TradierAccountType;
+}
